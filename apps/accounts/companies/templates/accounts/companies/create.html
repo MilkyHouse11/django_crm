@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'accounts/companies/css/create.css' %}">
+{% endblock %}
+
+{% block title %}Create Company{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Create Company</h1>
+
+        <a href="{% url 'accounts:companies:all' %}" class="btn-back">
+            ← Back
+        </a>
+    </div>
+
+    <div class="form-card">
+
+        <form method="post" class="create-form">
+
+            {% csrf_token %}
+
+            {{ form.as_div }}
+
+            <button class="btn-create">
+                Create Company
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

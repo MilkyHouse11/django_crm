@@ -1,0 +1,208 @@
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-soft: #818cf8;
+    --primary-bg: #eef2ff;
+    --success: #10b981;
+    --success-bg: #d1fae5;
+    --warning: #f59e0b;
+    --warning-bg: #fed7aa;
+    --danger: #ef4444;
+    --danger-bg: #fee2e2;
+    --gray-50: #faf9fe;
+    --gray-100: #f5f3ff;
+    --gray-200: #ede9fe;
+    --gray-300: #e4e4e7;
+    --gray-400: #a1a1aa;
+    --gray-500: #71717a;
+    --gray-600: #52525b;
+    --gray-700: #3f3f46;
+    --gray-800: #27272a;
+    --gray-900: #18181b;
+    --radius: 0.75rem;
+    --radius-sm: 0.5rem;
+    --shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    --transition: all 0.15s linear;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #f9fafb;
+    color: var(--gray-700);
+    line-height: 1.5;
+}
+
+.btn-back, .btn-create {
+    transition: var(--transition);
+}
+
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    letter-spacing: -0.02em;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: white;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--gray-600);
+    text-decoration: none;
+    box-shadow: var(--shadow);
+}
+
+.btn-back:hover {
+    background: var(--gray-100);
+    border-color: var(--gray-400);
+}
+
+.form-card {
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.create-form {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.create-form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.create-form label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+
+.create-form input,
+.create-form select {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-family: inherit;
+    width: 100%;
+    background: white;
+}
+
+.create-form input:focus,
+.create-form select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.create-form select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2371717a' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+}
+
+.create-form .errorlist {
+    list-style: none;
+    margin-top: 0.25rem;
+    padding: 0;
+}
+
+.create-form .errorlist li {
+    color: var(--danger);
+    font-size: 0.65rem;
+}
+
+.create-form .helptext {
+    font-size: 0.65rem;
+    color: var(--gray-500);
+    margin-top: 0.25rem;
+}
+
+.btn-create {
+    margin-top: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    width: 100%;
+}
+
+.btn-create:hover {
+    background: var(--primary-dark);
+}
+
+@media (max-width: 640px) {
+    .container {
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+
+    .form-card {
+        border-radius: var(--radius);
+    }
+
+    .create-form {
+        padding: 1.25rem;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-back {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .page-header h1 {
+        text-align: center;
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,72 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{% static 'accounts/users/css/create.css' %}">
+{% endblock %}
+
+{% block title %}Create User{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Create User</h1>
+
+        <a href="{% url 'accounts:users:all' %}" class="btn-back">
+            ← Back
+        </a>
+    </div>
+
+    <div class="form-card">
+
+        <form method="post" class="create-form">
+
+            {% csrf_token %}
+
+            <div>
+                <label class="error" id="__all__-error-${user_obj.id}"></label>
+            </div>
+
+            {{ form.as_div }}
+
+            {% if perms.users.global_add_user %}
+                <div>
+                    <label>Company</label>
+                    <label class="error" id="company-error"></label>
+                    <select name="company">
+                        <option value="">None</option>
+                        {% for company in companies %}
+                            <option value="{{ company.id }}">{{ company.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+
+            {% if perms.users.company_add_user %}
+                <div>
+                    <label>Team</label>
+                    <label class="error" id="team-error"></label>
+                    <select name="team">
+                        <option value="">None</option>
+                        {% for team in teams %}
+                            <option value="{{ team.id }}">{{ team.company.name }}: {{ team.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+
+            <button class="btn-create">
+                Create User
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

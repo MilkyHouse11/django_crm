@@ -1,0 +1,107 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{% static 'accounts/users/css/all.css' %}">
+
+<script src="{% static 'core/js/confirmUpdate.js' %}" defer></script>
+<script src="{% static 'core/js/editActions.js' %}" defer></script>
+<script src="{% static 'core/js/escapeHtml.js' %}" defer></script>
+<script src="{% static 'core/js/resetUpdate.js' %}" defer></script>
+<script src="{% static 'core/js/resetFilters.js' %}" defer></script>
+<script src="{% static 'accounts/users/js/load.js' %}" defer></script>
+<script>
+    const CSRF_TOKEN = '{% csrf_token %}'
+    const UPDATE_URL = "{% url 'accounts:users:update' 1 %}"
+    const LOAD_USERS_URL = "{% url 'accounts:users:load' %}"
+    const LOAD_TEAMS_URL = "{% url 'accounts:teams:load' %}"
+    const USER_PERMISSIONS = "{{ user_permissions|escapejs }}"
+    let currentPage = 1
+    let clicked = false
+    let companies = []
+    let roles = []
+
+    {% if companies %}
+    companies = JSON.parse(`{{ companies|escapejs }}`.replace(/"/g, '`').replace(/'/g, '"').replace(/`/g, "'"))
+    {% endif %}
+
+    {% if roles %}
+    roles = JSON.parse(`{{ roles|escapejs }}`.replace(/'/g, '"'))
+    {% endif %}
+</script>
+<script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+        load();
+    });
+</script>
+{% endblock %}
+
+{% block title %}Users | CRM{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="page-header">
+        <div class="header-left">
+            <h1>Users</h1>
+            <p class="page-subtitle">Manage system users and permissions</p>
+        </div>
+
+        <div class="header-actions">
+            <a href="{% url 'accounts:users:create' %}" class="btn-create">
+                + Create User
+            </a>
+        </div>
+    </div>
+
+    <div class="table-controls">
+        <form class="search-form" onreset="resetFilters(load)">
+            <div class="search-wrapper">
+                <input type="text" placeholder="Search users by email..." oninput="load()"
+                    class="search-input" id="search">
+            </div>
+
+            <div class="filters-group">
+                {% if user.role.name == 'team_admin' %}
+                    <select class="filter-select" id="filter-role" onchange="load()">
+                        <option value="all">All Roles</option>
+                            {% for role in roles %}
+                                <option value="{{ role.name }}">{{ role.name }}</option>
+                            {% endfor %}
+                    </select>
+                {% endif %}
+
+                {% if perms.users.global_view_user %}
+                    <select class="filter-select" id="filter-company" onchange="load()">
+                        <option value="all">All Companies</option>
+                        {% for company in companies %}
+                        <option value="{{ company.name }}">{{ company.name }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+
+                <button type="reset" class="btn-reset-search" id="reset-filters">
+                    Reset
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="users-grid" id="users-grid">
+        <div class="loading">
+            <p id="d1" class="d"></p>
+            <p id="d2" class="d"></p>
+            <p id="d3" class="d"></p>
+        </div>
+    </div>
+
+    <div class="pagination-container">
+        <button class="pagination-btn prev-btn" disabled>Previous</button>
+        <span class="pagination-info">Page <span class="current-page">1</span> of <span class="total-pages">1</span></span>
+        <button class="pagination-btn next-btn" disabled>Next</button>
+    </div>
+</div>
+
+{% endblock %}

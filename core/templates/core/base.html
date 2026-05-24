@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CRM Pro{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'core/css/base.css' %}">
+    <script src="{% static 'core/js/appearNav.js' %}" defer></script>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo">
+                <p class="logo-link">
+                    <span class="logo-text">CRM Pro</span>
+                </p>
+            </div>
+
+            <nav class="main-nav">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-list" id="navList">
+                    {% if can_view_lead %}
+                    <li><a href="{% url 'crm:leads:all' %}" class="nav-link">Leads</a></li>
+                    {% endif %}
+
+                    {% if can_view_deal %}
+                    <li><a href="{% url 'crm:deals:all' %}" class="nav-link">Deals</a></li>
+                    {% endif %}
+
+                    {% if can_view_user %}
+                    <li><a href="{% url 'accounts:users:all' %}" class="nav-link">Users</a></li>
+                    {% endif %}
+
+                    {% if can_view_team %}
+                    <li><a href="{% url 'accounts:teams:all' %}" class="nav-link">Teams</a></li>
+                    {% endif %}
+
+                    {% if can_view_company %}
+                    <li><a href="{% url 'accounts:companies:all' %}" class="nav-link">Companies</a></li>
+                    {% endif %}
+
+                    <form class="mobile-logout" action="{% url 'accounts:logout' %}" method="post" class="logout-form">
+                        {% csrf_token %}
+                        <button class="btn-logout" title="Logout">
+                            <span class="logout-text">Logout</span>
+                        </button>
+                    </form>
+                </ul>
+            </nav>
+
+            <div class="user-actions">
+                <div class="user-profile">
+                    <div class="header-user-avatar">
+                        {{ user.first_name|first|default:"U" }}{{ user.last_name|first|default:"" }}
+                    </div>
+                    <div class="header-user-info">
+                        <span class="header-user-name">{{ user.first_name|default:"User" }}</span>
+                        <span class="header-user-role">{{ user_role|default:"Admin" }}</span>
+                    </div>
+                </div>
+                <form class="pc-logout" action="{% url 'accounts:logout' %}" method="post" class="logout-form">
+                    {% csrf_token %}
+                    <button class="btn-logout" title="Logout">
+                        <span class="logout-text">Logout</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+
+</html>

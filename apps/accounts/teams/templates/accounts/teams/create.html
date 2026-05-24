@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'accounts/teams/css/create.css' %}">
+{% endblock %}
+
+{% block title %}Create Team{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Create Team</h1>
+
+        <a href="{% url 'accounts:teams:all' %}" class="btn-back">
+            ← Back
+        </a>
+    </div>
+
+    <div class="form-card">
+
+        <form method="post" class="create-form">
+
+            {% csrf_token %}
+
+            {{ form.as_div }}
+
+            <button class="btn-create">
+                Create Team
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

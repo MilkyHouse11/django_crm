@@ -1,0 +1,95 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Deals{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'crm/deals/css/all.css' %}">
+
+<script src="{% static 'core/js/resetFilters.js' %}" defer></script>
+<script src="{% static 'core/js/editActions.js' %}" defer></script>
+<script src="{% static 'core/js/escapeHtml.js' %}" defer></script>
+<script src="{% static 'core/js/confirmUpdate.js' %}" defer></script>
+<script src="{% static 'core/js/resetUpdate.js' %}" defer></script>
+<script src="{% static 'core/js/formatDate.js' %}"></script>
+<script src="{% static 'crm/comments/js/load.js' %}"></script>
+<script src="{% static 'crm/comments/js/submit.js' %}"></script>
+<script src="{% static 'crm/comments/js/toggle.js' %}"></script>
+<script defer>
+    const CSRF_TOKEN = '{% csrf_token %}';
+    const LOAD_DEALS_URL = "{% url 'crm:deals:load' %}";
+    const UPDATE_URL = "{{ update_url }}"
+    const COMMENTS_URL = "{% url 'crm:comments:get' 'type' 1 %}"
+    const ADD_COMMENT = "{% url 'crm:comments:create' %}"
+    let currentPage = 1
+    let clicked = false
+    let stages = []
+
+    {% if stages %}
+    stages = JSON.parse(`{{ stages|escapejs }}`.replace(/'/g, '"'))
+    {% endif %}
+</script>
+<script src="{% static 'crm/deals/js/load.js' %}"></script>
+<script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+        load();
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="page-header">
+        <div class="header-left">
+            <h1>Deals</h1>
+            <p class="page-subtitle">Manage and track sales opportunities</p>
+        </div>
+
+        {% if can_create_deal %}
+            <div class="header-actions">
+                <a href="{% url 'crm:deals:create' %}" class="btn-create">
+                    + Create Deal
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="table-controls">
+        <form class="search-form" onreset="resetFilters(load)">
+            <div class="search-wrapper">
+                <input type="text" placeholder="Search deals by title..." oninput="load()"
+                    class="search-input" id="search">
+            </div>
+
+            <div class="filters-group">
+                <select class="filter-select" id="filter-stage" onchange="load()">
+                    <option value="all">All Stages</option>
+                    {% for stage in stages %}
+                    <option value="{{ stage }}">{{ stage }}</option>
+                    {% endfor %}
+                </select>
+
+                <button type="reset" class="btn-reset-search" id="reset-filters">
+                    Reset
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="deals-grid" id="deals-grid">
+        <div class="loading">
+            <p id="d1" class="d"></p>
+            <p id="d2" class="d"></p>
+            <p id="d3" class="d"></p>
+        </div>
+    </div>
+
+    <div class="pagination-container">
+        <button class="pagination-btn prev-btn" disabled>Previous</button>
+        <span class="pagination-info">Page <span class="current-page">1</span> of <span class="total-pages">1</span></span>
+        <button class="pagination-btn next-btn" disabled>Next</button>
+    </div>
+</div>
+
+{% endblock %}

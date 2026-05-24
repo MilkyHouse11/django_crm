@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{% static 'accounts/companies/css/all.css' %}">
+<script>
+    const CSRF_TOKEN = '{% csrf_token %}';
+    const LOAD_COMPANIES_URL = "{% url 'accounts:companies:load' %}"
+    const UPDATE_URL = "{% url 'accounts:companies:update' 1 %}"
+    let currentPage = 1
+    let clicked = false
+</script>
+<script src="{% static 'core/js/editActions.js' %}"></script>
+<script src="{% static 'core/js/escapeHtml.js' %}"></script>
+<script src="{% static 'core/js/resetFilters.js' %}"></script>
+<script src="{% static 'core/js/confirmUpdate.js' %}"></script>
+<script src="{% static 'core/js/formatDate.js' %}"></script>
+<script src="{% static 'accounts/companies/js/load.js' %}" defer></script>
+{% endblock %}
+
+{% block title %}Companies | CRM{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="header-left">
+            <h1>Companies</h1>
+            <p class="page-subtitle">Manage your business partners</p>
+        </div>
+        <div class="header-actions">
+            <a href="{% url 'accounts:companies:create' %}" class="btn-create">
+                + Create Company
+            </a>
+        </div>
+    </div>
+
+    <div class="table-controls">
+        <form class="search-form" onreset="resetFilters(load)">
+            <div class="search-wrapper">
+                <input type="text" placeholder="Search companies by name..." oninput="load()"
+                    class="search-input" id="search">
+            </div>
+            <div class="filters-group">
+                <button type="reset" class="btn-reset-search" id="reset-filters">
+                    Reset
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="companies-grid" id="companies-grid">
+        <div class="loading">
+            <p id="d1" class="d"></p>
+            <p id="d2" class="d"></p>
+            <p id="d3" class="d"></p>
+        </div>
+    </div>
+
+    <div class="pagination-container">
+        <button class="pagination-btn prev-btn" disabled>Previous</button>
+        <span class="pagination-info">Page <span class="current-page">1</span> of <span class="total-pages">1</span></span>
+        <button class="pagination-btn next-btn" disabled>Next</button>
+    </div>
+</div>
+{% endblock %}
