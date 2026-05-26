@@ -19,7 +19,7 @@ class UserViewsTests(TestCase):
         user.set_password('123')
         user.save()
 
-        team = Team.objects.create(name='Team 1', company=company, team_admin=user)
+        team = Team.objects.create(name='Team 1', company=company)
 
         Membership.objects.create(user=user, team=team, company=company)
 
@@ -33,5 +33,5 @@ class UserViewsTests(TestCase):
                                                            'team': team.id,
                                                            'role': Group.objects.get(name='manager').id})
         u = User.objects.get(email='test_user@email.com')
-        membership = Membership.objects.get(user=u)
+        membership = Membership.objects.filter(user=u)
         self.assertTrue(membership)

@@ -82,14 +82,7 @@ class CreateDealView(LoginRequiredMixin, CheckPermissionsMixin, CreateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
-        return kwargs
-    
-    def form_valid(self, form):
-        deal = form.save(commit=False)
-        deal.team = self.request.user.membership.team
-        deal.company = self.request.user.membership.company
-
-        return super().form_valid(form)    
+        return kwargs 
 
 
 class AllDealsView(LoginRequiredMixin, CheckPermissionsMixin, TemplateView):

@@ -143,7 +143,6 @@ class CreateLeadView(LoginRequiredMixin, CheckPermissionsMixin, CreateView):
         lead = form.save(commit=False)
         lead.created_by = self.request.user
         lead.status = LeadStatus.NEW
-        lead.company = self.request.user.membership.company
         lead.team = self.request.user.membership.team
 
         if not self.request.user.has_perm('team_add_lead'):

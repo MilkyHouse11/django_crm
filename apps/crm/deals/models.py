@@ -18,10 +18,6 @@ class Deal(models.Model):
         max_length=50, choices=DealStage.choices, default=DealStage.NEGOTIAION)
     probability = models.PositiveIntegerField()
     expected_close_date = models.DateField()
-    team = models.ForeignKey(on_delete=models.DO_NOTHING,
-                             related_name='deals', to='teams.team')
-    company = models.ForeignKey(
-        on_delete=models.DO_NOTHING, related_name='deals', to='companies.company')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     closed_at = models.DateTimeField(null=True, blank=True)

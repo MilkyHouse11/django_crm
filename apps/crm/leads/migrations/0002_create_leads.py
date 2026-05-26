@@ -32,7 +32,6 @@ def create_leads(apps, schema_editor):
                         'status': LeadStatus.QUALIFIED,
                         'phone': phone,
                         'assigned_to': u,
-                        'company': company,
                         'team': team
                     }
                 )

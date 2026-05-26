@@ -28,9 +28,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('closed_at', models.DateTimeField(blank=True, null=True)),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='deals', to='companies.company')),
                 ('lead', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='deals', to='leads.lead')),
-                ('team', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='deals', to='teams.team')),
             ],
             options={
                 'constraints': [models.CheckConstraint(condition=models.Q(('probability__range', (0, 100))), name='probability_range_0_100'), models.CheckConstraint(condition=models.Q(('stage__in', ['negotiation', 'proposal', 'won', 'lost'])), name='stage_valid_values'), models.CheckConstraint(condition=models.Q(('closed_at__gte', models.F('created_at'))), name='closed_after_creation')],

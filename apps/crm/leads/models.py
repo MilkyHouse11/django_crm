@@ -15,7 +15,6 @@ class Lead(models.Model):
     assigned_to = models.ForeignKey(User, blank=True, null=True, on_delete=models.DO_NOTHING, related_name="assigned_leads")
     created_by = models.ForeignKey(User, null=True, on_delete=models.DO_NOTHING, related_name="created_leads")
     team = models.ForeignKey(on_delete=models.DO_NOTHING, related_name='leads', to='teams.team')
-    company = models.ForeignKey(on_delete=models.deletion.CASCADE, related_name='leads', to='companies.company')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)

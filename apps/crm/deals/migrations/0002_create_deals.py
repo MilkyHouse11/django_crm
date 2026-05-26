@@ -40,9 +40,7 @@ def create_deals(apps, schema_editor):
                     lead=lead,
                     expected_amount=500,
                     probability=80,
-                    expected_close_date='2026-05-03',
-                    company=company,
-                    team=team
+                    expected_close_date='2026-05-03'
                 )
 
 def delete_deals(apps, schema_editor):
@@ -70,9 +68,7 @@ def delete_deals(apps, schema_editor):
                         lead=lead,
                         expected_amount=500,
                         probability=80,
-                        expected_close_date='2026-05-03',
-                        company=company,
-                        team=team
+                        expected_close_date='2026-05-03'
                     ).delete()
                 except:
                     ...

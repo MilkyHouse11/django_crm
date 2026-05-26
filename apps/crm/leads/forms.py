@@ -32,7 +32,7 @@ class SetAssignedToMixin:
 class CreateLeadForm(SetAssignedToMixin, forms.ModelForm):
     class Meta:
         model = Lead
-        exclude = ['created_by', 'status', 'company', 'team', 'is_active']
+        exclude = ['created_by', 'status', 'team', 'is_active']
 
 
 class UpdateLeadForm(SetAssignedToMixin, forms.ModelForm):
@@ -40,7 +40,7 @@ class UpdateLeadForm(SetAssignedToMixin, forms.ModelForm):
 
     class Meta:
         model = Lead
-        exclude = ['created_by', 'company', 'team']
+        exclude = ['created_by', 'team']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

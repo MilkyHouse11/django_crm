@@ -18,7 +18,7 @@ class CreateDealForm(forms.ModelForm):
 
     class Meta:
         model = Deal
-        exclude = ['closed_at', 'stage', 'company', 'team', 'actual_amount', 'closed_at']
+        exclude = ['closed_at', 'stage', 'actual_amount', 'closed_at']
         help_texts = {'expected_close_date': 'Format: Year-Month-Day'}
 
     def __init__(self, *args, **kwargs):
@@ -49,5 +49,5 @@ class CreateDealForm(forms.ModelForm):
 class UpdateDealForm(forms.ModelForm):
     class Meta:
         model = Deal
-        exclude = ['lead', 'closed_at', 'team', 'company']
+        exclude = ['lead', 'closed_at']
         help_texts = {'expected_close_date': 'Format: Year-Month-Day'}

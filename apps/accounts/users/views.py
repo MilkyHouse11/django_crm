@@ -207,7 +207,6 @@ class CreateUserView(LoginRequiredMixin, CheckPermissionsMixin, CreateView):
                 if team:
                     membership.team_id = self.team  
             elif self.request.user.has_perm('users.team_add_user'):
-                print("TEAM ADMIN")
                 membership.team_id = self.request.user.membership.team_id
         
         membership.save()

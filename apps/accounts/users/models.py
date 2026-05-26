@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import Group
 
 
 class User(AbstractUser):
@@ -49,7 +50,6 @@ class User(AbstractUser):
 
     @property
     def groups(self):
-        from django.contrib.auth.models import Group
         if self.role:
             return Group.objects.filter(pk=self.role.pk)
         return Group.objects.none()

@@ -13,8 +13,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('teams', '0001_initial'),
-        ('companies', '0001_initial')
+        ('teams', '0001_initial')
     ]
 
     operations = [
@@ -26,7 +25,6 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(max_length=254, unique=True)),
                 ('phone', PhoneNumberField(unique=True)),
                 ('team', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='leads', to='teams.team')),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='leads', to='companies.company')),
                 ('source', models.CharField(choices=[('website', 'Webite'), ('call', 'Call'), ('email', 'Email'), ('ads', 'Ads')], max_length=20)),
                 ('status', models.CharField(choices=[('new', 'New'), ('contacted', 'Contacted'), ('qualified', 'Qualified'), ('rejected', 'Rejected')], default='new', max_length=10)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
